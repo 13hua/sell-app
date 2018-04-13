@@ -1,5 +1,5 @@
 <template>
-  <span class="icon" :class="[classMap[item], classIconMap[iconIndex]]"></span>
+  <span class="com-icon" :class="[classMap[item], classIconMap[iconIndex]]"></span>
 </template>
 
 <script>
@@ -25,7 +25,7 @@
 <style lang="scss" rel="stylesheet/scss">
   @import '../../common/scss/mixin.scss';
 
-  .icon {
+  .com-icon {
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -33,6 +33,7 @@
     margin-right: 6px;
     background-size: 16px 16px;
     background-repeat: no-repeat;
+    background-color: #fff;
   }
 
   .icon1 {

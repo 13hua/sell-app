@@ -13,7 +13,8 @@
           {{seller.description}}/{{seller.deliveryTime}}分钟送达
         </div>
         <div v-if="seller.supports" class="support">
-          <span class="icon" :class="classMap[seller.supports[0].type]"></span>
+          <!--<span class="icon" :class="classMap[seller.supports[0].type]"></span>-->
+          <v-icon :item="seller.supports[0].type" iconIndex="1"></v-icon>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
@@ -31,30 +32,31 @@
     </div>
     <!-- sticky footer 的套路 -->
     <transition name="fade">
-    <div v-show="detailShow" class="detail">
-      <div class="detail-wrapper clearfix">
-        <div class="detail-main">
-          <h1 class="name">{{seller.name}}</h1>
-          <div class="star-wrapper">
-            <star :size="36" :score="seller.score"></star>
-          </div>
-          <v-title text="优惠信息"></v-title>
-          <ul v-if="seller.supports" class="supports">
-            <li class="support-item" v-for="item in seller.supports" :key="item.id">
-              <span class="icon" :class="classMap[item.type]"></span>
-              <span class="text">{{item.description}}</span>
-            </li>
-          </ul>
-          <v-title text="商家公告"></v-title>
-          <div class="bulletin">
-            <p class="content">{{seller.bulletin}}</p>
+      <div v-show="detailShow" class="detail">
+        <div class="detail-wrapper clearfix">
+          <div class="detail-main">
+            <h1 class="name">{{seller.name}}</h1>
+            <div class="star-wrapper">
+              <star :size="36" :score="seller.score"></star>
+            </div>
+            <v-title text="优惠信息"></v-title>
+            <ul v-if="seller.supports" class="supports">
+              <li class="support-item" v-for="item in seller.supports" :key="item.id">
+                <!--<span class="icon" :class="classMap[item.type]"></span>-->
+                <v-icon :item="item.type" iconIndex="2"></v-icon>
+                <span class="text">{{item.description}}</span>
+              </li>
+            </ul>
+            <v-title text="商家公告"></v-title>
+            <div class="bulletin">
+              <p class="content">{{seller.bulletin}}</p>
+            </div>
           </div>
         </div>
+        <div class="detail-close" @click="hideDetail">
+          <i class="icon-close"></i>
+        </div>
       </div>
-      <div class="detail-close" @click="hideDetail">
-        <i class="icon-close"></i>
-      </div>
-    </div>
     </transition>
   </div>
 </template>
@@ -62,6 +64,7 @@
 <script>
   import star from 'components/star/star';
   import title from 'components/title/title';
+  import icon from 'components/icon/icon';
 
   export default {
     props: {
@@ -87,7 +90,8 @@
     },
     components: {
       star,
-      'v-title': title
+      'v-title': title,
+      'v-icon': icon
     }
   };
 </script>
@@ -138,7 +142,7 @@
           font-size: 12px;
         }
         .support {
-          .icon {
+          /* .icon {
             display: inline-block;
             vertical-align: top;
             width: 12px;
@@ -161,7 +165,7 @@
             &.special {
               @include bg-image('./img/special_1');
             }
-          }
+          } */
           .text {
             line-height: 12px;
             font-size: 10px;
@@ -275,7 +279,7 @@
               &:last-child {
                 margin-bottom: 0;
               }
-              .icon {
+              /*.icon {
                 display: inline-block;
                 width: 16px;
                 height: 16px;
@@ -298,7 +302,7 @@
                 &.special {
                   @include bg-image('./img/special_2');
                 }
-              }
+              }*/
               .text {
                 line-height: 16px;
                 font-size: 12px;
