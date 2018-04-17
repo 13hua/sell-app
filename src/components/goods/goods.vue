@@ -36,6 +36,7 @@
         </li>
       </ul>
     </div>
+    <shopcart></shopcart>
   </div>
 </template>
 
@@ -43,6 +44,7 @@
   import BScroll from 'better-scroll';
 
   import icon from 'components/icon/icon';
+  import shopcart from 'components/shopcart/shopcart';
 
   const ERR_OK = 0;
 
@@ -84,7 +86,8 @@
       });
     },
     components: {
-      'v-icon': icon
+      'v-icon': icon,
+      shopcart
     },
     methods: {
       selectMenu(index, event) {
