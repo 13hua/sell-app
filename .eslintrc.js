@@ -28,8 +28,9 @@ module.exports = {
     'semi': ['error', 'always'],
     'indent': 0,
     // 'space-before-blocks': ["error", { "functions": "never", "keywords": "never", "classes": "never" }],
-    'space-before-function-paren': ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}]
+    'space-before-function-paren': ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
     // "space-before-function-paren": ["error", "always"]
     // 'space-before-function-paren': ["error", { "anonymous": "never", "named": "always" }]
+    'no-undef': ["error", { "typeof": false }]
   }
 };
