@@ -56,6 +56,7 @@
         this.selectFoods.forEach((food) => {
           count += food.count;
         });
+        console.log(this.selectFoods.length);
         return count;
       },
       payDesc() {
