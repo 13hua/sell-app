@@ -39,7 +39,8 @@
         </li>
       </ul>
     </div>
-    <shopcart :select-food="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <shopcart ref="shopcartel" @click="addFood" :select-foods="selectFoods" :delivery-price="seller.deliveryPrice"
+              :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 
@@ -62,7 +63,8 @@
       return {
         goods: [],
         listHeight: [],
-        scrollY: 0
+        scrollY: 0,
+        selectedFood: {}
       };
     },
     computed: {
@@ -106,6 +108,11 @@
       shopcart,
       cartcontrol
     },
+    events: {
+      'cart.add'(target) {
+        this.drop(target);
+      }
+    },
     methods: {
       selectMenu(index, event) {
         if (!event._constructed) { /* event._constructedPC原生事件 */
@@ -115,6 +122,22 @@
         let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
         let el = foodList[index];
         this.foodsScroll.scrollToElement(el, 300);
+      },
+      selectFood(food, event) {
+        if (!event._constructed) {
+          return;
+        }
+        this.selectedFood = food;
+        this.$refs.food.show();
+      },
+      addFood(target) {
+        this._drop(target);
+      },
+      _drop(target) {
+        // 体验优化，异步执行下落动画
+        this.$nextTick(() => {
+          this.$refs.shopcartel.drop(target);
+        });
       },
       _initScroll() {
         this.menuScroll = new BScroll(this.$refs.menuWrapper, {

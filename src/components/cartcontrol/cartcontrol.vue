@@ -33,6 +33,7 @@
         } else {
           this.food.count++;
         }
+        this.$emit('cart.add', event.target);
       },
       decreaseCart() {
         if (this.food.count) {
@@ -46,16 +47,16 @@
 <style lang="scss" rel="stylesheet/scss">
   .cartcontrol {
     font-size: 0;
-    .cart-decrease{
+    .cart-decrease {
       display: inline-block;
       padding: 6px;
       opacity: 1;
       transform: translate3d(0, 0, 0);
-      .inner{
+      .inner {
         display: inline-block;
         line-height: 24px;
         font-size: 24px;
-        color: rgb(0,160,220);
+        color: rgb(0, 160, 220);
         transition: all 0.4s linear;
         transform: rotate(0);
       }
@@ -66,7 +67,7 @@
     .move-enter, .move-leave-to {
       opacity: 0;
       transform: translate3d(24px, 0, 0);
-      .inner{
+      .inner {
         transform: rotate(180deg);
       }
     }
