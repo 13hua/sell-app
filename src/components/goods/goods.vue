@@ -31,7 +31,7 @@
                                                                 v-show="food.oldPrice">￥{{food.oldPrice}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  <cartcontrol :food="food"></cartcontrol>
+                  <cartcontrol @add="addFood" :food="food"></cartcontrol>
                 </div>
               </div>
             </li>
@@ -87,7 +87,6 @@
             }
           });
         });
-        console.log(foods);
         return foods;
       }
     },
@@ -107,11 +106,6 @@
       'v-icon': icon,
       shopcart,
       cartcontrol
-    },
-    events: {
-      'cart.add'(target) {
-        this.drop(target);
-      }
     },
     methods: {
       selectMenu(index, event) {
