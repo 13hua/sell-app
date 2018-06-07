@@ -218,11 +218,11 @@
           food.count = 0;
         });
       },
-      hideList(){
+      hideList() {
         this.fold = true;
       },
-      pay(){
-        if(this.totalPrice < this.minPrice){
+      pay() {
+        if (this.totalPrice < this.minPrice) {
           return;
         }
         window.alert(`去支付${this.totalPrice}元`);
@@ -429,7 +429,7 @@
     z-index: 40;
     backdrop-filter: blur(10px);
     opacity: 1;
-    background: rgba(7,17,27,.6);
+    background: rgba(7, 17, 27, .6);
     &.fade-enter-active, &.fade-leave-active {
       transition: all .5s;
     }
