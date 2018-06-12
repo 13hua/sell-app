@@ -34,22 +34,25 @@
         <!--商品评价-->
         <div class="rating">
           <h1 class="title">商品评价</h1>
-          <ratingSelect :ratings="food.ratings" :select-type="selectType" :only-content="onlyContent"
+          <ratingSelect @select="selectRating" @toggle="toggleContent" :ratings="food.ratings" :select-type="selectType"
+                        :only-content="onlyContent"
                         :desc="desc"></ratingSelect>
           <div class="rating-wrapper">
             <ul v-show="food.ratings && food.ratings.length">
               <li v-show="needShow(rating.ratingType,rating.text)" v-for="(rating,index) in food.ratings" :key="index"
                   class="rating-item">
                 <div class="user">
-                  <span class="name">{{rating.name}}</span>
+                  <span class="name">{{rating.username}}</span>
                   <img class="avatar" width="12" height="12" src="rating.avatar" alt="">
                 </div>
-                <div class="time">{{rating.rateTime}}</div>
+                <div class="time">{{rating.rateTime | formatDate}}</div>
                 <p class="text">
                   <span :class="{'icon-thumb_up':rating.rateType ===0,'icon-thumb_down':rating.rateType ===1}"></span>
+                  <span>{{rating.text}}</span>
                 </p>
               </li>
             </ul>
+            <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
           </div>
         </div>
       </div>
@@ -60,6 +63,8 @@
 <script>
   import Vue from 'vue';
   import BScroll from 'better-scroll';
+
+  import {formatDate} from 'common/js/date';
 
   import cartcontrol from 'components/cartcontrol/cartcontrol';
   import ratingSelect from 'components/ratingSelect/ratingSelect';
@@ -126,8 +131,34 @@
         } else {
           return type === this.selectType;
         }
+      },
+      selectRating(type) {
+        this.selectType = type;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
+      },
+      toggleContent() {
+        this.onlyContent = !this.onlyContent;
+        this.$nextTick(() => {
+          this.scroll.refresh();
+        });
       }
     },
+    filters: {
+      formatDate(time) {
+        let date = new Date(time);
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
+      }
+    },
+    // events: {
+    //   'ratingtype.select'(type) {
+    //     this.selectType = type;
+    //   },
+    //   'content.toggle'(onlyContent) {
+    //     this.onlyContent = onlyContent;
+    //   }
+    // },
     components: {
       cartcontrol,
       ratingSelect,
@@ -311,6 +342,11 @@
               color: rgb(147, 153, 159);
             }
           }
+        }
+        .no-rating {
+          padding: 16px 0;
+          font-size: 12px;
+          color: rgb(147, 153, 159);
         }
       }
     }
