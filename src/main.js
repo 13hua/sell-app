@@ -15,10 +15,18 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 
 const router = new VueRouter({
-  routes: [
-    {path: '/goods', component: goods},
-    {path: '/ratings', component: ratings},
-    {path: '/seller', component: seller}
+  routes: [{
+      path: '/goods',
+      component: goods
+    },
+    {
+      path: '/ratings',
+      component: ratings
+    },
+    {
+      path: '/seller',
+      component: seller
+    }
   ],
   linkActiveClass: 'active'
 });
@@ -28,8 +36,10 @@ const router = new VueRouter({
 new Vue({
   router,
   el: '#app',
-  components: {App},
+  components: {
+    App
+  },
   template: '<App/>'
 }).$mount('#app');
 
-router.push('/goods');
+// router.push('/goods');
