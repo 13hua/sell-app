@@ -28,6 +28,10 @@
                         </div>
                     </li>
                 </ul>
+                <div class="favorite" @click="toggleFavorite">
+                  <span class="icon-favorite" :class="{'active':favorite}"></span>
+                  <span class="text">{{favoriteText}}</span>
+                </div>
             </div>
             <split></split>
             <div class="bulletin">
@@ -54,6 +58,13 @@
                 </ul>
               </div>
             </div>
+            <split></split>
+            <div class="info">
+              <h1 class="title border-1px">商家信息</h1>
+              <ul>
+                <li class="info-item" v-for="(info,index) in seller.infos" :key="index">{{info}}</li>
+              </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -72,7 +83,14 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      favorite: false
+    };
+  },
+  computed: {
+    favoriteText() {
+      return this.favorite ? '已收藏' : '收藏';
+    }
   },
   created() {
     this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special'];
@@ -85,6 +103,11 @@ export default {
     });
   },
   methods: {
+    toggleFavorite(event) {
+      if (!event._constructed) {
+      }
+      this.favorite = !this.favorite;
+    },
     _initScroll() {
       if (!this.scroll) {
         this.scroll = new BScroll(this.$refs.seller, {
@@ -133,6 +156,7 @@ export default {
   overflow: hidden;
   .overview {
     padding: 18px;
+    position: relative;
     .title {
       margin-bottom: 8px;
       line-height: 14px;
@@ -182,6 +206,28 @@ export default {
         }
       }
     }
+    .favorite {
+      position: absolute;
+      width: 50px;
+      right: 11px;
+      top: 18px;
+      text-align: center;
+      .icon-favorite {
+        display: block;
+        margin-bottom: 4px;
+        line-height: 24px;
+        font-size: 24px;
+        color: #d4d6d9;
+        &.active {
+          color: rgb(240, 20, 20);
+        }
+      }
+      .text {
+        line-height: 10px;
+        font-size: 10px;
+        color: rgb(77, 85, 93);
+      }
+    }
   }
   .bulletin {
     padding: 18px 18px 0 18px;
@@ -206,7 +252,7 @@ export default {
         @include border-bottom-1px(rgba(7, 17, 27, 0.1));
         font-size: 0;
         &:last-child {
-          border: none;
+          @include border-none();
         }
       }
       // .icon {
@@ -263,6 +309,26 @@ export default {
             margin: 0;
           }
         }
+      }
+    }
+  }
+  .info {
+    padding: 18px 18px 0 18px;
+    color: rgb(7, 17, 27);
+    .title {
+      padding-bottom: 12px;
+      line-height: 14px;
+      @include border-bottom-1px(rgba(7, 17, 27, 0.1));
+      color: rgb(7, 17, 27);
+      font-size: 14px;
+    }
+    .info-item {
+      padding: 16px 12px;
+      line-height: 16px;
+      @include border-bottom-1px(rgba(7, 17, 27, 0.1));
+      font-size: 12px;
+      &:last-child {
+        @include border-none();
       }
     }
   }

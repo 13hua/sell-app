@@ -13,60 +13,66 @@
 </template>
 
 <script>
-  import header from 'components/header/header.vue';
-  import list from 'components/list/list.vue';
+import { urlParse } from 'common/js/utils';
 
-  const ERR_OK = 0;
+import header from 'components/header/header.vue';
+import list from 'components/list/list.vue';
 
-  export default {
-    data() {
-      return {
-        seller: {}
-      };
-    },
-    created() {
-      this.$http.get('/api/seller').then((response) => {
-        response = response.body;
-        if (response.errno === ERR_OK) {
-          this.seller = response.data;
-        }
-      });
-    },
-    components: {
-      'v-header': header,
-      'v-list': list
-    },
-    methods: {
-      clickBtn: function () {
-        this.total += 1;
-      }
-    }
-  };
+const ERR_OK = 0;
 
-</script>
-<style lang="scss" rel="stylesheet/scss">
-  @import './common/scss/mixin.scss';
-
-  #app {
-    .tab {
-      display: flex;
-      width: 100%;
-      height: 40px;
-      line-height: 40px;
-      /*border-bottom: 1px solid rgba(7,17,27,.1);*/
-      @include border-bottom-1px(rgba(7, 17, 27, .1));
-      .tab-item {
-        flex: 1;
-        text-align: center;
+export default {
+  data() {
+    return {
+      seller: {
+        id: (() => {
+          let queryParam = urlParse();
+          return queryParam.id;
+        })()
       }
-      a {
-        display: block;
-        font-size: 14px;
-        color: rgb(77, 85, 93);
+    };
+  },
+  created() {
+    this.$http.get('/api/seller').then(response => {
+      response = response.body;
+      if (response.errno === ERR_OK) {
+        this.seller = response.data;
       }
-      .active {
-        color: rgb(240, 20, 20);
-      }
+    });
+  },
+  components: {
+    'v-header': header,
+    'v-list': list
+  },
+  methods: {
+    clickBtn: function () {
+      this.total += 1;
     }
   }
+};
+</script>
+<style lang="scss" rel="stylesheet/scss">
+@import './common/scss/mixin.scss';
+
+#app {
+  .tab {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    /*border-bottom: 1px solid rgba(7,17,27,.1);*/
+    @include border-bottom-1px(rgba(7, 17, 27, 0.1));
+    .tab-item {
+      flex: 1;
+      text-align: center;
+    }
+    a {
+      display: block;
+      font-size: 14px;
+      color: rgb(77, 85, 93);
+    }
+    .active {
+      color: rgb(240, 20, 20);
+    }
+  }
+}
 </style>
