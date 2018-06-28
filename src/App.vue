@@ -7,7 +7,8 @@
       <router-link class="tab-item" to="/seller">商家</router-link>
     </div>
     <div class="content">
-      <router-view :seller="seller"></router-view>
+      <keep-alive><router-view :seller="seller"></router-view></keep-alive>
+      
     </div>
   </div>
 </template>
@@ -32,10 +33,12 @@ export default {
     };
   },
   created() {
-    this.$http.get('/api/seller').then(response => {
+    this.$http.get('/api/seller?id=' + this.seller.id).then(response => {
       response = response.body;
       if (response.errno === ERR_OK) {
-        this.seller = response.data;
+        // this.seller = response.data;
+        this.seller = Object.assign({},this.seller,response.data);
+        console.log(this.seller.id);
       }
     });
   },
